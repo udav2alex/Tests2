@@ -47,23 +47,31 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     }
 
     private fun setQueryListener() {
+        searchButton.setOnClickListener {
+            startSearch()
+        }
         searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val query = searchEditText.text.toString()
-                if (query.isNotBlank()) {
-                    presenter.searchGitHub(query)
-                    return@OnEditorActionListener true
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.enter_search_word),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@OnEditorActionListener false
-                }
+                return@OnEditorActionListener startSearch()
             }
             false
         })
+    }
+
+    private fun startSearch(): Boolean {
+        val query = searchEditText.text.toString()
+
+        return if (query.isNotBlank()) {
+            presenter.searchGitHub(query)
+            true
+        } else {
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.enter_search_word),
+                Toast.LENGTH_SHORT
+            ).show()
+            false
+        }
     }
 
     private fun createRepository(): RepositoryContract {
@@ -96,11 +104,20 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     }
 
     override fun displayError() {
-        Toast.makeText(this, getString(R.string.undefined_error), Toast.LENGTH_SHORT).show()
+        val error = getString(R.string.undefined_error)
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+        with(totalCountTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
     }
 
     override fun displayError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+        with(totalCountTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
     }
 
     override fun displayLoading(show: Boolean) {
