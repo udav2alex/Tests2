@@ -1,6 +1,7 @@
 package com.geekbrains.tests.automator
 
 import android.content.Context
+import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
@@ -39,7 +40,7 @@ class InitialTest {
     //Проверяем, что Интент для запуска нашего приложения не null
     @Test
     fun test_MainActivityIntentNotNull() {
-        val intent = context.packageManager.getLaunchIntentForPackage(packageName)
+        val intent: Intent? = context.packageManager.getLaunchIntentForPackage(packageName)
         Assert.assertNotNull(intent)
     }
 }

@@ -10,6 +10,6 @@ internal class FakeGitHubRepository : RepositoryContract {
         query: String,
         callback: RepositoryCallback
     ) {
-        callback.handleGitHubResponse(Response.success(SearchResponse(42, listOf())))
+        callback.handleGitHubResponse(Response.success(SearchResponse(672, listOf())))
     }
 }

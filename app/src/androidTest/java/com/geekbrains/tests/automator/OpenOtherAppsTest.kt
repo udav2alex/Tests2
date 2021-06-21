@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
 import org.junit.Assert
@@ -49,7 +50,7 @@ class OpenOtherAppsTest {
         //appViews.setAsHorizontalList()
 
         //Находим в контейнере настройки по названию иконки
-        val settingsApp = appViews
+        val settingsApp: UiObject = appViews
             .getChildByText(
                 UiSelector()
                     .className(TextView::class.java.name),
@@ -59,7 +60,7 @@ class OpenOtherAppsTest {
         settingsApp.clickAndWaitForNewWindow()
 
         //Убеждаемся, что Настройки открыты
-        val settingsValidation =
+        val settingsValidation: UiObject =
             uiDevice.findObject(UiSelector().packageName("com.android.settings"))
         Assert.assertTrue(settingsValidation.exists())
     }
